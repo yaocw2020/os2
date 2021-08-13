@@ -1,15 +1,14 @@
 ARG LUET_VERSION=0.16.7
 FROM quay.io/luet/base:$LUET_VERSION AS luet
 
-FROM registry.suse.com/suse/sle15:15.3 AS base
+FROM opensuse/leap:15.3 AS base
 
 # Copy luet from the official images
 COPY --from=luet /usr/bin/luet /usr/bin/luet
 
 ARG ARCH=amd64
 ENV ARCH=${ARCH}
-RUN zypper rm -y container-suseconnect
-RUN zypper ar --priority=200 http://download.opensuse.org/distribution/leap/15.3/repo/oss repo-oss
+RUN zypper mr --disable repo-non-oss repo-update-non-oss
 RUN zypper --no-gpg-checks ref
 COPY files/etc/luet/luet.yaml /etc/luet/luet.yaml
 
