@@ -1,0 +1,22 @@
+#!/bin/bash
+
+get_git()
+{
+  if [ -n "$(git status --porcelain --untracked-files=no)" ]; then
+      DIRTY="-dirty"
+  fi
+
+  COMMIT=$(git rev-parse --short HEAD)
+}
+
+
+get_git
+DATE=$(date +%Y%m%d)
+
+export OS_REPO=rancher/rancheros2
+export LABEL=${DATE}
+export OS_VERSION=${DATE}
+export OS_GIT="${COMMIT}${DIRTY}"
+export DOCKER_BUILD_ARGS="--no-cache"
+
+make build

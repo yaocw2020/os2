@@ -1,15 +1,16 @@
 .DEFAULT_GOAL := iso
-REPO?=ibuildthecloud/test
 LABEL?=latest
-IMAGE=${REPO}:${LABEL}
+IMAGE=${OS_REPO}:${LABEL}
 TOOLS=${IMAGE}-tools
 
 .PHONY: build
 build:
-	docker build \
+	docker build ${DOCKER_BUILD_ARGS} \
 		--build-arg CACHEBUST="${CACHEBUST}" \
 		--build-arg OS_LABEL=${LABEL} \
-		--build-arg OS_REPO=${REPO} \
+		--build-arg OS_VERSION=${OS_VERSION} \
+		--build-arg OS_GIT=${OS_GIT} \
+		--build-arg OS_REPO=${OS_REPO} \
 		-t ${IMAGE} .
 
 .PHONY: push
