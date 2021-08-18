@@ -1,0 +1,58 @@
+---
+kind: pipeline
+name: amd64
+
+platform:
+  os: linux
+  arch: amd64
+
+steps:
+- name: build
+  image: alpine:3.14
+  commands:
+  - apk add -U bash git gettext
+  - ./scripts/ci
+
+- name: docker-build
+  image: plugins/docker
+  settings:
+    dockerfile: Dockerfile
+    repo: "rancher/harvester-os"
+    tag: "dev-head"
+    dry_run: true
+
+- name: docker-publish-dev
+  image: plugins/docker
+  settings:
+    dockerfile: Dockerfile
+    repo: "rancher/harvester-os"
+    tag: "dev-head"
+    username:
+      from_secret: docker_username
+    password:
+      from_secret: docker_password
+  when:
+    instance:
+      - drone-publish.rancher.io
+    ref:
+      - refs/heads/dev
+    event:
+      - push
+
+- name: docker-publish
+  image: plugins/docker
+  settings:
+    dockerfile: Dockerfile
+    repo: "rancher/harvester-os"
+    tag: "${DRONE_TAG}"
+    username:
+      from_secret: docker_username
+    password:
+      from_secret: docker_password
+  when:
+    instance:
+    - drone-publish.rancher.io
+    ref:
+    - refs/tags/*
+    event:
+    - tag
