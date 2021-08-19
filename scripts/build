@@ -1,0 +1,15 @@
+#!/bin/bash -e
+
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )/" &> /dev/null && pwd )"
+
+source ${SCRIPT_DIR}/ci
+
+IMAGE=${OS_REPO}:${OS_LABEL}
+
+DOCKER_BUILD_ARGS="--no-cache"
+CACHEBUST=$(date)
+
+docker build ${DOCKER_BUILD_ARGS} \
+  --build-arg CACHEBUST="${CACHEBUST}" \
+  -t ${IMAGE} .
+

@@ -91,10 +91,4 @@ RUN luet install -y \
 COPY files/ /
 RUN mkinitrd
 
-ARG OS_NAME=RancherOS
-ARG OS_VERSION=999
-ARG OS_GIT=dirty
-ARG OS_REPO=norepo/norepo
-ARG OS_LABEL=latest
-RUN envsubst >/usr/lib/os-release </usr/lib/os-release.tmpl && \
-    rm /usr/lib/os-release.tmpl
+COPY os-release /usr/lib/os-release

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh -ex
 
 get_git()
 {
@@ -13,10 +13,9 @@ get_git()
 get_git
 DATE=$(date +%Y%m%d)
 
-export OS_REPO=rancher/rancheros2
-export LABEL=${DATE}
+export OS_REPO=rancher/harvester-os
+export OS_LABEL="base-${DATE}"
 export OS_VERSION=${DATE}
 export OS_GIT="${COMMIT}${DIRTY}"
-export DOCKER_BUILD_ARGS="--no-cache"
 
-make build
+envsubst >os-release <os-release.tmpl
