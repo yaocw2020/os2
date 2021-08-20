@@ -10,6 +10,7 @@ ARG ARCH=amd64
 ENV ARCH=${ARCH}
 RUN zypper mr --disable repo-non-oss repo-update-non-oss
 RUN zypper --no-gpg-checks ref
+RUN zypper update -y
 COPY files/etc/luet/luet.yaml /etc/luet/luet.yaml
 
 FROM base as tools

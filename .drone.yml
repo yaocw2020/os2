@@ -20,6 +20,9 @@ steps:
     repo: "rancher/harvester-os"
     tag: "dev-head"
     dry_run: true
+  when:
+    instance:
+      - drone-pr.rancher.io
 
 - name: docker-publish-dev
   image: plugins/docker
