@@ -75,6 +75,9 @@ RUN zypper in -y \
     vim \
     which
 
+# Harvester needs these packages
+RUN zypper in -y apparmor-parser zstd
+
 ARG CACHEBUST
 RUN luet install -y \
     toolchain/yip \
