@@ -75,6 +75,18 @@ RUN zypper in -y \
     vim \
     which
 
+# Harvester needs these packages
+RUN zypper in -y apparmor-parser \
+    zstd
+
+# Additional useful packages
+RUN zypper in -y traceroute \
+    tcpdump \
+    lsof \
+    sysstat \
+    iotop \
+    hdparm
+
 ARG CACHEBUST
 RUN luet install -y \
     toolchain/yip \
@@ -88,6 +100,9 @@ RUN luet install -y \
     utils/k9s \
     utils/nerdctl \
     utils/rancherd
+
+# Create the folder for journald persistent data
+RUN mkdir -p /var/log/journal
 
 COPY files/ /
 RUN mkinitrd
