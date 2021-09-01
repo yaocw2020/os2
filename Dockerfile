@@ -76,7 +76,16 @@ RUN zypper in -y \
     which
 
 # Harvester needs these packages
-RUN zypper in -y apparmor-parser zstd
+RUN zypper in -y apparmor-parser \
+    zstd
+
+# Additional useful packages
+RUN zypper in -y traceroute \
+    tcpdump \
+    lsof \
+    sysstat \
+    iotop \
+    hdparm
 
 ARG CACHEBUST
 RUN luet install -y \
