@@ -101,6 +101,9 @@ RUN luet install -y \
     utils/nerdctl \
     utils/rancherd
 
+# Create the folder for journald persistent data
+RUN mkdir -p /var/log/journal
+
 COPY files/ /
 RUN mkinitrd
 
