@@ -61,6 +61,7 @@ RUN zypper in -y \
     open-vm-tools \
     parted \
     pigz \
+    python3-selinux \
     policycoreutils \
     procps \
     python-azure-agent \
