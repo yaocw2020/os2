@@ -1,7 +1,7 @@
 ARG LUET_VERSION=0.16.7
 FROM quay.io/luet/base:$LUET_VERSION AS luet
 
-FROM opensuse/leap:15.3 AS base
+FROM opensuse/leap:15.4 AS base
 
 # Copy luet from the official images
 COPY --from=luet /usr/bin/luet /usr/bin/luet
